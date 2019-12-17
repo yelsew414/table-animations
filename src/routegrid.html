@@ -1,0 +1,57 @@
+@using Sitecore.Mvc
+@using Sitecore.Mvc.Presentation
+@using Glass.Mapper.Sc.Web.Mvc
+@model RideUTA.ViewModels.Routes.RouteResponse
+
+@{
+    List<RideUTA.ViewModels.Routes.Stop> stopList = Model.Stops;
+}
+
+<style>
+    
+</style>
+
+<div id="" class="view">
+    <div class="wrapper"> 
+        <table>
+            @foreach (RideUTA.ViewModels.Routes.Stop stop in stopList)
+            {
+                <tr>
+                    <th class="first-col stop-name">@stop.StopName</th>
+
+                    @{ int index = 0; }
+                    @foreach (String stopTime in stop.StopList)
+                    {
+                        index++;
+                        if(stopTime.Length > 4 && (stopTime.Substring(stopTime.Length - 2) == "AM" || stopTime.Substring(stopTime.Length - 2) == "PM"))
+                        {
+                            <td class="time-desc" data-trip="@(index)">@stopTime.Substring(0, stopTime.Length - 2)<span class="ampm">@stopTime.Substring(stopTime.Length - 2)</span></td>
+                        }
+                        else if(stopTime == "No Stop")
+                        {
+                            <td class="time-desc no-trip" data-trip="@(index)">no stop</td>
+                        }
+                        else 
+                        {
+                            <td class="time-desc no-trip" data-trip="@(index)">error</td>
+                        }
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+    <div id="trip-shifter" class="selected-trip-controls" style="padding: 50px 0 0 50px; display: none; margin-bottom: 25px;">
+        <div align="center" class="col-12" style="margin:10px 0 10px 0;">
+            <h4>Showing only the trip that you selected.</h4>
+        </div>
+        
+        <div align="center" class="toggle col-sm-12" style="">
+            <a href="javascript:;" class="gray-otl-btn btn earlier" style="border-radius: 30px 0 0 30px; border-right-width: 0;"><i class="icon-chevron-left"></i> Earlier</a><a href="javascript:;" class="gray-otl-btn btn later" style="border-radius: 0 30px 30px 0;">Later <i class="icon-chevron-right"></i> </a>
+        </div>
+        
+        <div style="margin-top: 15px; text-align: center">
+            <a href="javascript:;" class="show-all-trips">Show All Trips</a>
+        </div>
+        
+    </div>
+</div>

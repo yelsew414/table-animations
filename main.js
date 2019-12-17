@@ -39,20 +39,182 @@ let data = {
     "m1": ['12:00', '12:15', '12:30', '12:45', '1:00', '1:15', '1:30', '1:45', '2:00', '2:15', '2:30', '2:45', '3:00', '3:15', '3:30', '3:45', '4:00', '4:15', '4:30', '4:45', '5:00', '5:15', '5:30', '5:45'],
     "n1": ['12:00', '12:15', '12:30', '12:45', '1:00', '1:15', '1:30', '1:45', '2:00', '2:15', '2:30', '2:45', '3:00', '3:15', '3:30', '3:45', '4:00', '4:15', '4:30', '4:45', '5:00', '5:15', '5:30', '5:45']
 }
-$(document).ready(function(){
-    let $table = $('#schedule')
 
-    function generateTable() {
-        let trip = 0;
+// function highlightTrip() {
+//     $(this).closest('tbody').find('td:nth-child(' + ($(this).index() + 1) + ')').addClass('highlight');
+// }
+
+// function unhighlightTrip() {
+//     $(this).closest('tbody').find('td:nth-child(' + ($(this).index() + 1) + ')').removeClass('highlight');
+// }
+
+// function animationTest() {
+//     gsap.to("td[tselect='false']", 2, {
+//         //scaleY: 0,
+//     height:0,
+//     autoAlpha: 0,
+//     display: "none"//,
+//     //transformOrigin: "50% 0%"
+//       });
+// }
+
+// function clickTrip() {
+
+//     // delete code up to including return
+//     let trip = $(this).attr('trip')
+//     $("td[trip='"+trip+"']").attr('tselect', true)
+//     animationTest();
+//     return;
+//     let s = $(this).attr('tselect')
+//     if (s != "false") {
+//         $("td[tselect='false']").show()
+//         $("td").attr('tselect', false)
+//     } else {
+//         let trip = $(this).attr('trip')
+//         $("td[trip='"+trip+"']").attr('tselect', true)
+//         $("td[tselect='false']").hide()
+//     }
+// }
+// function deselectTrip() {
+
+// }
+// function collapse() {
+//     gsap.to(".schedule-grid", 2, {
+//         width:0,
+//     });
+// }
+// function collapseBlocks() {
+//     // gsap.set(".block", {width: "auto"})
+//     gsap.to(".block", 1, {
+//         css: {width:0},
+//     });
+// }
+// function reset() {
+//     gsap.to(".block", 1, {
+//         width:'100px',
+//     });
+// }
+
+// function resetDemo() {
+//     gsap.to(".box", 1, {
+//         css: {width:'300px', borderLeft: 2, borderRight: 2}
+//     });
+// }
+
+// function collapseDemo() {
+//     gsap.to(".box", 1, {
+//         css: {width:0, paddingLeft: 0, paddingRight: 0, borderLeft: 0, borderRight: 0},
+//     });
+// }
+
+// function selectTripDemo() {
+//     gsap.to(".q", 1, {
+//         css: {width:0, paddingLeft: 0, paddingRight: 0, borderLeft: 0, borderRight: 0},
+//     });
+// }
+
+// function selectStopDemo() {
+//     gsap.to(".z", 1, {
+//         css: {height:0},
+//     });
+// }
+
+// $(document).ready(function(){
+
+//     $('#zzz, #xxx').click(function(){
+//         gsap.to(this, 2, {
+//             css: {width:0},
+//         });
+//     });
+
+//     let $table = $('#schedule')
+
+//     function generateTable() {
+//         let content = "";
+//         for (var key in data) {
+//             let trip = 0;
+//             content +="<tr>";
+//             content +="<th class='headcol'>" + key + "</th>";
+//             data[key].forEach(time => {
+//                 content += "<td class='mycell' tselect=false trip='" + trip + "'>" + time + "</td>"; 
+//                 trip++;
+//             });
+//             content+="</tr>"
+//         }
+//         $table.html(content);
+//     }
+//     generateTable();
+//     $(".mycell").hover(highlightTrip, unhighlightTrip)
+//     $(".mycell").click(clickTrip);
+// });
+
+function resetDemo() {
+    gsap.to(".box", 1, {
+        css: {width:'100px', borderLeft: 2, borderRight: 2}
+    });
+}
+
+function collapseDemo() {
+    gsap.to(".box", 1, {
+        css: {width:0, paddingLeft: 0, paddingRight: 0, borderLeft: 0, borderRight: 0},
+    });
+}
+
+function selectTripDemo() {
+    gsap.to(".q", 1, {
+        css: {width:0, paddingLeft: 0, paddingRight: 0, borderLeft: 0, borderRight: 0},
+    });
+}
+
+function selectStopDemo() {
+    gsap.to(".z", 1, {
+        css: {height:0},
+    });
+}
+
+function animateDemo() {
+  // do entire thing fast
+  /* 	gsap.to(".q", {paddingLeft: 0, width: 0, paddingRight: 0, borderLeft: 0, borderRight: 0, opacity: 0, duration: .25});
+	 */
+   
+   // standard
+/* 	gsap.to(".q", {paddingLeft: 0, width: 0, paddingRight: 0, borderLeft: 0, borderRight: 0, opacity: 0, duration: .5});*/
+
+	// multistep
+    gsap.to(".f-demo", {opacity: 0, width: 0, duration: .5});
+    gsap.to(".q", {opacity: 0, width: 0, duration: .5, paddingLeft: 0, width: 0, paddingRight: 0, borderLeft: 0, borderRight: 0});      //wait 1 second
+ }
+
+$(document).ready(function(){
+		let rowCount = 100;
+    let colCount = 50;
+
+    function generateStops() {
+				let $stops = $('.trips')
         let content = "";
-        for (var key in data) {
-            content +="<tr>";
-            content +="<th>" + key + "</th>";
-            data[key].forEach(time => content += "<td trip='" + trip + "'>" + time + "</td>");
-            content+="</tr>"
-            trip++;
+        for (let i = 0; i < rowCount; i++) {
+        	content+="<div class='stop'>STOP NAME</div>";//q
         }
-        $table.html(content);
+        $stops.html(content);
     }
-    generateTable();
+    function generateTrips() {
+      	let $trips = $('.the-container')
+        let content = "";
+        for (let i = 0; i < rowCount; i++) {
+        	if (i == 0) {
+          	          content += "<div class='z-demo z'>"
+
+          } else {
+          	          content += "<div class='f-demo z'>"
+          }
+          for (let x = 0; x < colCount; x++) {
+            content+="<div class='box q'>" + Math.floor(Math.random() * 100) + "</div>";
+          }
+          content+="</div>"
+        }
+        $trips.html(content);
+    }
+    generateTrips();
+    generateStops();
+
 });

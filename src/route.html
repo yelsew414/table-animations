@@ -1,0 +1,182 @@
+@using Sitecore.Mvc
+@using Sitecore.Mvc.Presentation
+@using Glass.Mapper.Sc.Web.Mvc
+@model RideUTA.Models.Routes.Route
+@{
+    var routeType = Model.RouteType == "FrontRunner" ? "Commuter Train" : Model.RouteType;
+    var routeIcon = Model.RouteType == "Streetcar" ? "Trax" : Model.RouteType;
+
+}
+<style>
+    .multi-toggle {
+        white-space: nowrap;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .multi-toggle > .toggle-btn.left {
+        border-right-width: 0;
+        border-radius: 30px 0 0 30px;
+    }
+    .multi-toggle > .toggle-btn.middle {
+        border-radius: 0 ; 
+        border-right-width: 0;
+    }
+    .multi-toggle > .toggle-btn.right {
+        border-radius: 0 30px 30px 0;
+    }
+    .multi-toggle > .toggle-btn:hover {
+        background: #0055A4;
+        border-color: #0055A4;
+    }
+    .multi-toggle > .tgl-selected {
+        background: #0055A4;
+        border-color: #0055A4;
+        color: white;
+    }
+    #mobile-trip-shifter > hr {
+        margin: 0;
+        border-top: 2px solid grey;
+    }
+</style>
+
+<section class="banner" style="background-image:url('@Model.HeroImage.Src');">
+    <div class="container">
+        @Html.Sitecore().Rendering("{BFF4B599-639D-4237-9B69-703CD43805FA}")
+    </div>
+</section>
+<section>
+    <div class="route-header">
+        <div class="container">
+            <div class="route-badge">
+                <span>ROUTE</span>
+                <span class="route-number">@Html.Glass().Editable(m => m.RouteNumber)</span>
+            </div>
+            <div class="route-description">
+                <h1 class="name">@Html.Glass().Editable(m => m.RouteTitle)</h1>
+                <a href="/sitecore/content/Home/Rider Tools/Schedules and Maps" class="type"><i class="icon-@routeIcon.ToLower()"></i> @routeType</a>
+                <a href="/Rider-Tools/Vehicle-Locator/Map?route=@Model.RouteNumber" class="type"><i class="icon-marker"></i> Locate</a>
+                @if (Model.PrintableSchedule != null)
+                {
+                    using (Html.Glass().BeginRenderLink(m => m.PrintableSchedule, new { @class = "type", target = "_blank" }))
+                    {
+                        <i class="icon-doc"></i> <span>Maps Schedule</span>
+                    }
+                }
+            </div>
+            @if (Model.ShowScheduleChange)
+            {
+                <div class="schedule-changes">
+                    <h5><i class="icon-sch-change"></i> @Html.Glass().Editable(m => m.ScheduleChangeMessage.Text)</h5>
+                    @if (Model.NewPrintableSchedule != null)
+                    {
+                        using (Html.Glass().BeginRenderLink(m => m.NewPrintableSchedule, new { @class = "type", target = "_blank" }))
+                        {
+                            <i class="icon-doc"></i> <span>New Schedule</span>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="route-notice">
+        <div class="container">
+            @if (!String.IsNullOrEmpty(Model.RouteNotice))
+            {
+                <p><strong>@Model.RouteNotice</strong></p>
+            }
+
+        </div>
+    </div>
+    <div class="spaced-bottom">
+        <div class="container container-margin">
+            <div id="content-flow">
+                <div class="container-fluid fare" id="trip-planner" style="padding-bottom: 0;">
+                    <div style="row">
+                        <div align="center" class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-lg-offset-0" style="padding-bottom: 0;">
+                            <div class="field-row toggle js-direction-change">
+                                @{
+                                    if (Model.DirectionList.Count == 2) {
+                                        <a id="left-toggle" href="javascript:;" class="gray-otl-btn btn toggle-btn-left active-toggle">@Model.DirectionList[0]</a><a id="right-toggle" href="javascript:;" class="gray-otl-btn btn toggle-btn-right">@Model.DirectionList[1]</a>
+                                    }
+                                    else {
+                                        <span>There was an error loading directions</span>
+                                    }
+                                }
+                                
+                            </div>
+                        </div>
+                        <div id="trip-calendar" align="center" class="col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-0 col-md-3 col-md-offset-0 col-lg-4 col-lg-offset-0">
+                            <div class="field-row calendar-flex">
+                                <div id="calendar-left" class="gray-otl-btn btn left-btn">
+                                    <i class="icon-chevron-left"></i>
+                                </div>
+                                <div class="date-field">
+                                    <input type="text" name="date" class="trip-date js-cal-open" id="date" value="@Model.SelectedDateOfTravel.ToString("MM-dd-yyyy")" readonly>
+                                    <i class="cal-icon js-cal-open"><img src="/assets/img/calendar.png" alt="calendar"></i>
+                                </div>
+                                <div id="calendar-right" class="gray-otl-btn btn right-btn">
+                                    <i class="icon-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div align="center" class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-lg-offset-0" style="padding-bottom: 0;">
+                            <div class="field-row multi-toggle">
+                                <a href="javascript:;" class="gray-otl-btn btn toggle-btn left moring tgl-selected morning">Morning</a><a href="javascript:;" class="gray-otl-btn btn toggle-btn middle day">Day</a><a href="javascript:;" class="gray-otl-btn btn toggle-btn right night">Night</a>  
+                            </div>
+                        </div>
+
+                        <div id="trip-instructions" align="center" class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-12 col-lg-offset-0" style="margin:10px 0 10px 0;">
+                            <h4>Tap stops and times below to highlight and filter.</h4>
+                        </div>
+                        <div id="mobile-trip-shifter" align="center" class="selected-trip-controls col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0" style="display: none;">
+                            <hr class="col-sm-12">
+                            <div align="center" class="col-sm-12" style="margin:10px 0 10px 0;">
+                                <h4>Showing only the trip that you selected.</h4>
+                            </div>
+                            <div align="center" class="toggle col-sm-12">
+                                <a href="javascript:;" class="gray-otl-btn btn toggle-btn-left toggle-btn left-btn left-toggle earlier"><i class="icon-chevron-left"></i>Earlier</a><a href="javascript:;" class="gray-otl-btn btn toggle-btn-right toggle-btn right-btn right-toggle later">Later<i class="icon-chevron-right"></i></a>
+                            </div>
+                            <div align="center" class="col-sm-12 col-sm-offset-0" style="margin-top: 10px; margin-bottom: 10px;">
+                                <a href="javascript:;" class="show-all-trips">Show All Trips</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @Html.Partial("/Views/Layouts/Routes/RouteGrid.cshtml", Model.KeyStops)
+
+                <div class="mobile-colapse">
+                    <div class="handle js-drawer">
+                        <span>Fares</span>
+                        <i class="icon-chevron-right"></i>
+                    </div>
+                    <div class="drawer js-drawer">
+                        @Html.Sitecore().Placeholder("fare-tables")
+                    </div>
+                </div>
+            </div>
+            <!-- <aside id="sidebar">
+                @Html.Sitecore().Placeholder("content-promos")
+            </aside> -->
+        </div>
+</section>
+<div class="cal-overlay"></div>
+<div class="cal-modal">
+    <div class="frame">
+        <div class="modal-utility">
+            <h3 class="modal-title">Select Day of Travel</h3>
+            <a href="#" class="modal-close js-cal-close">
+                <i class="icon-close"></i>
+            </a>
+        </div>
+        <div id="trip" class="trip-calendar"></div>
+    </div>
+</div>
+<script>
+    require(["trip"]);
+</script>
+<script type="text/javascript">
+    var routeNumber = '@Model.RouteNumber';
+</script>
+
+
+

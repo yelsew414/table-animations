@@ -11,62 +11,95 @@
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+        <link rel="stylesheet" href="style.css">
         
     </header>
     <body>
-        <!-- Fixed navbar -->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Bootstrap theme</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Separated link</a></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
-        
-        <div class="container theme-showcase" role="main">
-            
-            <!-- Main jumbotron for a primary marketing message or call to action -->
-            <div class="jumbotron">
-                <h1>Theme example</h1>
-                <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
-            </div>
-            
-            <div class="page-header">
-                <h1>Tables</h1>
-            </div>
-            <table>
-                <tbody id="schedule">
+     
+        <h3>AND YET ANOTHER DEMO</h3>
+    
+        <button type="button" onclick="collapseDemo()">collapse</button>
+        <button type="button" onclick="resetDemo()">expand</button>
+        <button type="button" onclick="selectTripDemo()">second trip</button>
+        <button type="button" onclick="selectStopDemo()">second stop</button>
+        <button type="button" onclick="animateDemo()">animate</button>
 
-                </tbody>
-            </table>
-        </div> <!-- /container -->
-        
+        <div class="yet-another-container">
+                <div class="trips z">
+                        <!-- <div class="stop box q">STOP NAME</div>
+                        <div class="stop box q">STOP NAME</div>
+                        
+                        <div class="stop box q">STOP NAME</div>
+                        <div class="stop box q">STOP NAME</div>
+                        <div class="stop box q">STOP NAME</div> -->
+                </div>
+                <div class="the-container">
+                        <!-- <div class="f-demo z">
+                                <div class="box q">z</div>
+                                <div class="box">c</div>
+                                <div class="box q">c</div>
+                        
+                                <div class="box q">c</div>
+                                <div class="box q">d</div>
+                                        
+                        </div>
+                        <div class="f-demo">
+                                <div class="box q">g</div>
+                                        
+                                <div class="box">
+                                        d
+                                </div>
+                                <div class="box q">
+                                        k
+                                </div>
+                                <div class="box q">c</div>
+                                <div class="box q">d</div>
+                                        
+                        </div>
+                        <div class="f-demo z">
+                                <div class="box q">j</div>
+                                
+                                <div class="box">
+                                        j
+                                </div>
+                                <div class="box q">
+                                        w
+                                </div>
+                                <div class="box q">p</div>
+                                <div class="box q">r</div>
+                                        
+                        </div>
+                        <div class="f-demo z">
+                                <div class="box q">e</div>
+                                
+                                <div class="box">
+                                        b
+                                </div>
+                                <div class="box q">
+                                        a
+                                </div>
+                                <div class="box q">c</div>
+                                <div class="box q">d</div>
+                                        
+                        </div>
+                        <div class="f-demo z">
+                                <div class="box q">b</div>
+                                
+                                <div class="box">
+                                        y
+                                </div>
+                                <div class="box q">
+                                        x
+                                </div>
+                                <div class="box q">m</div>
+                                <div class="box q">n</div>
+                                        
+                        </div> -->
+                </div>
+        </div>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
         <script src="main.js"></script>
         <!-- Bootstrap core JavaScript
             ================================================== -->
