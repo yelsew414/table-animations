@@ -40,114 +40,6 @@ let data = {
     "n1": ['12:00', '12:15', '12:30', '12:45', '1:00', '1:15', '1:30', '1:45', '2:00', '2:15', '2:30', '2:45', '3:00', '3:15', '3:30', '3:45', '4:00', '4:15', '4:30', '4:45', '5:00', '5:15', '5:30', '5:45']
 }
 
-// function highlightTrip() {
-//     $(this).closest('tbody').find('td:nth-child(' + ($(this).index() + 1) + ')').addClass('highlight');
-// }
-
-// function unhighlightTrip() {
-//     $(this).closest('tbody').find('td:nth-child(' + ($(this).index() + 1) + ')').removeClass('highlight');
-// }
-
-// function animationTest() {
-//     gsap.to("td[tselect='false']", 2, {
-//         //scaleY: 0,
-//     height:0,
-//     autoAlpha: 0,
-//     display: "none"//,
-//     //transformOrigin: "50% 0%"
-//       });
-// }
-
-// function clickTrip() {
-
-//     // delete code up to including return
-//     let trip = $(this).attr('trip')
-//     $("td[trip='"+trip+"']").attr('tselect', true)
-//     animationTest();
-//     return;
-//     let s = $(this).attr('tselect')
-//     if (s != "false") {
-//         $("td[tselect='false']").show()
-//         $("td").attr('tselect', false)
-//     } else {
-//         let trip = $(this).attr('trip')
-//         $("td[trip='"+trip+"']").attr('tselect', true)
-//         $("td[tselect='false']").hide()
-//     }
-// }
-// function deselectTrip() {
-
-// }
-// function collapse() {
-//     gsap.to(".schedule-grid", 2, {
-//         width:0,
-//     });
-// }
-// function collapseBlocks() {
-//     // gsap.set(".block", {width: "auto"})
-//     gsap.to(".block", 1, {
-//         css: {width:0},
-//     });
-// }
-// function reset() {
-//     gsap.to(".block", 1, {
-//         width:'100px',
-//     });
-// }
-
-// function resetDemo() {
-//     gsap.to(".box", 1, {
-//         css: {width:'300px', borderLeft: 2, borderRight: 2}
-//     });
-// }
-
-// function collapseDemo() {
-//     gsap.to(".box", 1, {
-//         css: {width:0, paddingLeft: 0, paddingRight: 0, borderLeft: 0, borderRight: 0},
-//     });
-// }
-
-// function selectTripDemo() {
-//     gsap.to(".q", 1, {
-//         css: {width:0, paddingLeft: 0, paddingRight: 0, borderLeft: 0, borderRight: 0},
-//     });
-// }
-
-// function selectStopDemo() {
-//     gsap.to(".z", 1, {
-//         css: {height:0},
-//     });
-// }
-
-// $(document).ready(function(){
-
-//     $('#zzz, #xxx').click(function(){
-//         gsap.to(this, 2, {
-//             css: {width:0},
-//         });
-//     });
-
-//     let $table = $('#schedule')
-
-//     function generateTable() {
-//         let content = "";
-//         for (var key in data) {
-//             let trip = 0;
-//             content +="<tr>";
-//             content +="<th class='headcol'>" + key + "</th>";
-//             data[key].forEach(time => {
-//                 content += "<td class='mycell' tselect=false trip='" + trip + "'>" + time + "</td>"; 
-//                 trip++;
-//             });
-//             content+="</tr>"
-//         }
-//         $table.html(content);
-//     }
-//     generateTable();
-//     $(".mycell").hover(highlightTrip, unhighlightTrip)
-//     $(".mycell").click(clickTrip);
-// });
-
 function resetDemo() {
     gsap.to(".box", 1, {
         css: {width:'100px', borderLeft: 2, borderRight: 2}
@@ -160,19 +52,25 @@ function collapseDemo() {
     });
 }
 
-function selectTripDemo() {
+function trip() {
     gsap.to(".q", 1, {
         css: {width:0, paddingLeft: 0, paddingRight: 0, borderLeft: 0, borderRight: 0},
     });
 }
 
-function selectStopDemo() {
-    gsap.to(".z", 1, {
-        css: {height:0},
+function stop() {
+    // this animates everything but the last row
+    gsap.to(".f-demo.y", 1, {
+        css: {height:0, border: 0},
+    });
+
+    // animate stops
+    gsap.to(".stop.y", 1, {
+        css: {height: 0, border: 0, paddingTop: 0, paddingBottom: 0, opacity: 0},
     });
 }
 
-function animateDemo() {
+function animateStopDemo() {
   // do entire thing fast
   /* 	gsap.to(".q", {paddingLeft: 0, width: 0, paddingRight: 0, borderLeft: 0, borderRight: 0, opacity: 0, duration: .25});
 	 */
@@ -181,36 +79,113 @@ function animateDemo() {
 /* 	gsap.to(".q", {paddingLeft: 0, width: 0, paddingRight: 0, borderLeft: 0, borderRight: 0, opacity: 0, duration: .5});*/
 
 	// multistep
-    gsap.to(".f-demo", {opacity: 0, width: 0, duration: .5});
-    gsap.to(".q", {opacity: 0, width: 0, duration: .5, paddingLeft: 0, width: 0, paddingRight: 0, borderLeft: 0, borderRight: 0});      //wait 1 second
- }
+    // gsap.to(".f-demo", {opacity: 0, width: 0, duration: .5});
+    // gsap.to(".q", {opacity: 0, width: 0, duration: .5, paddingLeft: 0, width: 0, paddingRight: 0, borderLeft: 0, borderRight: 0});      //wait 1 second
+ 
+
+    //this successfully animates stop selected 12/17
+    // let element = ".f-demo.y"
+    // TweenMax.to(element, 1, {opacity: 0, border: 0});
+    // TweenMax.to(element, 1, {height:0, delay:1});
+
+    
+    // 12/17
+    // this animates everything but the last row
+    // animate grid
+
+    animateStop()
+    // css: {height: 0, border: 0, paddingTop: 0, paddingBottom: 0, opacity: 0}
+
+    // TweenMax.to(element, 1, {opacity: 0, height:0, border: 0});
+    // gsap.to(element, 1, {
+    //     css: {opacity: 0, height:0, border: 0},
+    // });
+
+    // animate stops
+    // gsap.to(".stop.y", 1, {
+    //     css: {height: 0, border: 0, paddingTop: 0, paddingBottom: 0, opacity: 0},
+    // });
+
+}
+
+function animateStop() {
+    var tstop = new TimelineMax()
+
+    let tripElements = ".f-demo.y, .stop.y"
+    tstop.to(tripElements, .25, {opacity: 0,});
+    tstop.to(tripElements, 1.25, {height:0, paddingTop: 0, paddingBottom: 0, border: 0, margin: 0});
+}
+
+function animateTrip2() {
+
+    // gsap.to(".q", 1, {
+    //     css: {width:0, paddingLeft: 0, paddingRight: 0, borderLeft: 0, borderRight: 0},
+    // });
+    
+    let tripElements = ".q"
+    let ttrip = new TimelineMax()
+    ttrip.to(tripElements, .25, {opacity: 0,});
+    // ttrip.to(tripElements, 0, {visibility: 'hidden'} )
+    // ttrip.to(tripElements, .75, {width:0, paddingLeft: 0, paddingRight: 0, border: 0, margin: 0});
+    ttrip.to(tripElements, .75, {width:0, paddingLeft: 0, paddingRight: 0, border: 0, margin: 0});
+}
+
+
+
+function animateStop2() {
+    let ttrip = new TimelineMax()
+    var tstop = new TimelineMax()
+
+    let tripElements = ".f-demo.y, .stop.y"
+    tstop.to(tripElements, .25, {opacity: 0,});
+    tstop.to(tripElements, .25, {height:0, paddingTop: 0, paddingBottom: 0, border: 0, margin: 0});
+
+    // let stopElements = ".stop.y"
+    // ttrip.to(stopElements, .25, {opacity: 0, border: 0});
+    // ttrip.to(stopElements, 1.25, {height:0, paddingTop: 0, paddingBottom: 0});
+}
 
 $(document).ready(function(){
-		let rowCount = 100;
-    let colCount = 50;
+	let rowCount = 100;
+    let colCount = 25;
 
     function generateStops() {
-				let $stops = $('.trips')
+				let $stops = $('.stops-container')
         let content = "";
         for (let i = 0; i < rowCount; i++) {
-        	content+="<div class='stop'>STOP NAME</div>";//q
+            if (i == 5) {
+                content+="<div class='stop'>STOP NAME*</div>";//stop to be selected 
+            } else {
+                content+="<div class='stop y'>STOP NAME</div>";//q
+            }
         }
         $stops.html(content);
     }
     function generateTrips() {
-      	let $trips = $('.the-container')
-        let content = "";
+      	let $trips = $('.grid-container')
+        let content = "<div>";
         for (let i = 0; i < rowCount; i++) {
-        	if (i == 0) {
-          	          content += "<div class='z-demo z'>"
-
-          } else {
-          	          content += "<div class='f-demo z'>"
-          }
-          for (let x = 0; x < colCount; x++) {
-            content+="<div class='box q'>" + Math.floor(Math.random() * 100) + "</div>";
-          }
-          content+="</div>"
+        	if (i == 5) { // FOR STOP
+          	    content += "<div class='f-demo z'>"
+            } else {
+          	    content += "<div class='f-demo z y'>"
+            }
+            for (let x = 0; x < colCount; x++) {
+                if (x == 5) { // FOR TRIP
+                    if (i == 5) {
+                        content+="<div class='box'>" + Math.floor(Math.random() * 100) + "**</div>";
+                    } else {
+                        content+="<div class='box'>" + Math.floor(Math.random() * 100) + "*</div>";
+                    }
+                } else {
+                    if (i == 5) {
+                        content+="<div class='box q'>" + Math.floor(Math.random() * 100) + "*</div>";
+                    } else {
+                        content+="<div class='box q'>" + Math.floor(Math.random() * 100) + "</div>";
+                    }
+                }
+            }
+            content+="</div></div>"
         }
         $trips.html(content);
     }
